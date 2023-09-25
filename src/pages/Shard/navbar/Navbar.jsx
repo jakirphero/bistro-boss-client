@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
-import './Navbar.css'
+import './Navbar.css';
+import { FaShoppingCart } from 'react-icons/fa';
 import { useContext } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
+import useCart from '../../../hooks/useCart';
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCart();
 
     const handelLogOut = () => {
         logOut()
@@ -16,6 +19,7 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Menu</Link></li>
         <li><Link to="/order/salad">Order Now</Link></li>
+        <li><Link to="/secrete">Secrete</Link></li>
         {
             user ?
                 <>
@@ -48,9 +52,17 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                    < p > <span className='text-pink-50 font-bold border-y-2 mr-2 px-1'>{user?.displayName}</span></p>
+                    <li>
+                        <Link to="dashboard/myCart">
+                            <button className="btn">
+                                <FaShoppingCart className='text-purple-800'></FaShoppingCart>
+                                <div className="badge badge-secondary">+{cart?.length || 0}</div>
+                            </button>
+                        </Link>
+                    </li>
                 </div>
-            </div>
+            </div >
         </>
     );
 };
