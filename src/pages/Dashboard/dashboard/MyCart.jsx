@@ -67,7 +67,7 @@ const MyCart = () => {
                     </thead>
                     <tbody>
                         {
-                            cart.map((item, index) => <tr key={item.key_id}>
+                            cart.map((item, index) => <tr key={item._id}>
                                 <th>
                                     {index + 1}
                                 </th>

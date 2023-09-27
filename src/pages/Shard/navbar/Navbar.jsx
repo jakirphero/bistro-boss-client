@@ -57,7 +57,7 @@ const Navbar = () => {
                         <Link to="dashboard/myCart">
                             <button className="btn">
                                 <FaShoppingCart className='text-purple-800'></FaShoppingCart>
-                                <div className="badge badge-secondary">+{cart?.length || 0}</div>
+                                <div className="badge badge-secondary">{cart?.length || 0}+</div>
                             </button>
                         </Link>
                     </li>

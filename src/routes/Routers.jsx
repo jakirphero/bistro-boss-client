@@ -13,6 +13,8 @@ import Secrete from "../pages/Shard/secrete/Secrete";
 import Main from "../layout/Main";
 import Dashboard from "../layout/Dashboard";
 import MyCart from "../pages/Dashboard/dashboard/MyCart";
+import Users from "../pages/Dashboard/Allusers/Users";
+import AdminRoute from "./AdminRoute";
 
   export const router = createBrowserRouter([
     {
@@ -47,11 +49,15 @@ import MyCart from "../pages/Dashboard/dashboard/MyCart";
     },
     {
       path: 'dashboard',
-      element: <Dashboard></Dashboard>,
+      element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children: [
         {
           path: 'myCart',
           element: <MyCart></MyCart>
+        },
+        {
+          path: 'users',
+          element: <AdminRoute><Users></Users></AdminRoute>
         }
       ]
     }

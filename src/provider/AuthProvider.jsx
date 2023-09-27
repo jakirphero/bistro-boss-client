@@ -1,8 +1,9 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import app from "../Firebase/Firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -12,6 +13,8 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const googleProvider = new GoogleAuthProvider();
+
     const createUser = (email, password) => {
         setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password);
@@ -20,6 +23,11 @@ const AuthProvider = ({ children }) => {
     const signIn = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
+    }
+
+    const googleSignIn = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
     }
 
     const updateUser = (name, photo) => {
@@ -37,7 +45,19 @@ const AuthProvider = ({ children }) => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             console.log('current user', currentUser);
-            setLoading(false);
+
+            //post and get token
+            if(currentUser){
+                axios.post('http://localhost:5000/jwt', {email: currentUser.email})
+                .then(data => {
+                    localStorage.setItem('Access-token', data.data.token);
+                    setLoading(false);
+                })
+            }
+            else {
+                localStorage.removeItem('Access-token');
+            }
+
         });
         return () => {
             return unSubscribe();
@@ -49,6 +69,7 @@ const AuthProvider = ({ children }) => {
         loading,
         createUser,
         signIn,
+        googleSignIn,
         updateUser,
         logOut
     }
