@@ -25,15 +25,15 @@ const Dashboard = () => {
                     {
                         isAdmin ? <>
                             <li><NavLink to="/dashboard/userHome"><FaHome></FaHome>admin home</NavLink></li>
-                            <li><NavLink to="/dashboard/reservation"><FaUtensils></FaUtensils>add items</NavLink></li>
-                            <li><NavLink to="/dashboard/reservation">manage items</NavLink></li>
+                            <li><NavLink to="/dashboard/addItems"><FaUtensils></FaUtensils>add an item</NavLink></li>
+                            <li><NavLink to="/dashboard/manageitems">manage items</NavLink></li>
                             <li><NavLink to="/dashboard/reservation"><FaBook></FaBook>booking items</NavLink></li>
                             <li><NavLink to="/dashboard/users"><FaUsers></FaUsers>all users</NavLink></li>
                             
                         </> : <>
                             <li><NavLink to="/dashboard/userHome"><FaHome></FaHome>user home</NavLink></li>
                             <li><NavLink to="/dashboard/reservation"><FaCalendarAlt></FaCalendarAlt>reservation</NavLink></li>
-                            <li><NavLink to="/dashboard/payment"><FaWallet></FaWallet>payment history</NavLink></li>
+                            <li><NavLink to="/dashboard/"><FaWallet></FaWallet>payment history</NavLink></li>
                             <li><NavLink to="/dashboard/myCart"><FaShoppingCart></FaShoppingCart> my cart
                                 <span className="badge inl badge-secondary">{cart?.length || 0}+</span>
                             </NavLink></li>
